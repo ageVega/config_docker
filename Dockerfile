@@ -2,11 +2,14 @@ FROM ubuntu:18.04
 RUN \
   apt-get update && apt-get install -y software-properties-common && apt-get -y install cron
 
-ENV PROJECT_HOME /usr/src
+ENV PROJECT_HOME /root/shared
 ENV USER_HOME /home/vega
 
 # Add files
 ADD sshd_config /sshd_config
+#ADD sleep.sh /
+# Add volumes
+#VOLUME /home/
 
 RUN \
   apt install -y net-tools && apt install -y vim && apt install -y git && \
@@ -23,3 +26,6 @@ RUN echo "root:123" | chpasswd
 RUN rm /etc/ssh/sshd_config
 RUN mv /sshd_config /etc/ssh/
 
+WORKDIR $PROJECT_HOME
+
+#CMD /bin/bash /sleep.sh
